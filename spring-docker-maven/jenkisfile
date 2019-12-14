@@ -3,6 +3,18 @@ node{
             git credentialsId: 'git-creds', url: 'https://github.com/roua99/CI-CD.git'
 
         }
-        
+           stage ('mvn package') {
+            def mvnHome = tool name: 'maven-3', type: 'maven'
+            def mvnCMD = "${mvnHome}/bin/mvn"
+            sh  "${mvnCMD} clean " 
+          }
+        stage ('mvn package') {
+           def mvnHome = tool name: 'maven-3', type: 'maven'
+            def mvnCMD = "${mvnHome}/bin/mvn"
+            sh "${mvnCMD}  package"
+        }
+        stage ('Build Docker Image'){
+            sh 'mvn docker:build'
+        }  
      
  }
